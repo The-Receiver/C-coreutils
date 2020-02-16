@@ -9,8 +9,7 @@ void print_usage(){
 int main(int argc, char* argv[]){
     
   bool space = false;
-  bool newline = true; // toggle output of newline; 
-  //incoming option
+  bool newline = true; 
   char option;
   //do not print program name
   int optind = 1;
