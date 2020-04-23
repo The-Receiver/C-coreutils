@@ -3,17 +3,14 @@
 
 using namespace std;
 
-#include <iostream>
-
+//Workd only if there are no args left
 void verify_string(const string str){
-
+    if (str[str.length() - 1] == '%'){
+           cout << "\nbad format. Terminating. string:\n" << str << '\n';
+           exit(EXIT_FAILURE);
+    }   
     int nexti = 1;
-   
-    for (int i = 0; i < str.length(); i++){
-        if (i == str.length() - 1 && str[i] == '%') {
-            cout << "\nbad format. Terminating. string:\n" << str << '\n';
-            exit(EXIT_FAILURE);
-        }
+    for (int i = 0; i < str.length() - 1; i++){
         char c = str[i];
         char n = str[nexti];
         if (c == '%' && n != '%') {
@@ -30,20 +27,17 @@ void format(const string str){
     int nexti = 1;
     string strbuilder = "";
     verify_string(str);
-    for (int i = 0; ; i++){
+    for (int i = 0; i < str.length(); i++){
         char c = str[i];
-        if (i == str.length()){
-            cout << strbuilder;
-            return;
-        }
         char n = str[nexti];
-        if ( c == '%' && n == '%') {
+        //we know % is escaped
+        if ( c == '%' ) {
             strbuilder += '%';
             nexti++;
             i++;
         } else strbuilder += c;
         nexti++; 
-    }
+    }  cout << strbuilder;
 }
  
 template<typename T, typename... argT>
@@ -52,18 +46,29 @@ void format(const string str, const T val, const argT... args){
     for (int i = 0; i < str.length(); i++) {
         char c = str[i];
         char n = str[nexti];
-        if ( c == '%' && n == 'a') {
-            cout << val;
-            if (i < str.length() - 2) {
-                format(str.substr(nexti + 1, str.length()), args...); 
-                return;
+	    if (c == '%'){
+            switch (n){
+                case 'a':
+                  cout << val;
+                  if (i < str.length() - 2)
+                    format(str.substr(nexti + 1, str.length()), args...); 
+                  return;
+                case 's':
+                  cout << val;
+                  if (i < str.length() - 2)
+                    format(str.substr(nexti + 1, str.length()), val, args...); 
+                  return;
+                case '%':
+                  cout << '%';
+                  i++;
+                  nexti++;
+                  break;
+                default:
+                  //Error message will not print out full string
+                  cout << "\nbad format. Terminating. string:\n" << str << '\n';
+                  exit(EXIT_FAILURE);
             }
-            return;
-        } else if (c == '%' && n == '%'){
-            cout << '%';
-            i++;
-            nexti++;
-        } else cout << c;
+	    } else  cout << c;
         nexti++;
     }
 }
@@ -78,7 +83,3 @@ void formatln(const string str){
     format(str);
     cout << '\n';
 }
- 
- 
-
- 
