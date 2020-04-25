@@ -10,11 +10,5 @@ todo:
 
 #### Format
 usage:  
-format string, "%%" for escaped %, "%a" for next argument in list.  
-todo:  
-- support for an option %s for the same argument as before  
-- support for floating-point formatting  
-- (optional) support for python-style {0} {1} {n} format specification      
-format("%a strings are %a%% cool and nice\n", "format", "100")  
-
-
+format string, "%%" for escaped %, "%a" for next argument in list, %s for same argument  
+in list as last one.  
