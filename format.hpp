@@ -3,14 +3,13 @@
 
 using namespace std;
 
-//Workd only if there are no args left
+//Works only if there are no args left
 void verify_string(const string str){
     if (str[str.length() - 1] == '%'){
            cout << "\nbad format. Terminating. string:\n" << str << '\n';
            exit(EXIT_FAILURE);
     }   
-    int nexti = 1;
-    for (int i = 0; i < str.length() - 1; i++){
+    for (int i = 0, nexti = 1; i < str.length() - 1; i++, nexti++){
         char c = str[i];
         char n = str[nexti];
         if (c == '%' && n != '%') {
@@ -24,10 +23,9 @@ void verify_string(const string str){
 }
  
 void format(const string str){
-    int nexti = 1;
     string strbuilder = "";
     verify_string(str);
-    for (int i = 0; i < str.length(); i++){
+    for (int i = 0, nexti = 1; i < str.length(); i++, nexti++){
         char c = str[i];
         char n = str[nexti];
         //we know % is escaped
@@ -36,14 +34,13 @@ void format(const string str){
             nexti++;
             i++;
         } else strbuilder += c;
-        nexti++; 
     }  cout << strbuilder;
 }
  
 template<typename T, typename... argT>
 void format(const string str, const T val, const argT... args){
     int nexti = 1;
-    for (int i = 0; i < str.length(); i++) {
+    for (int i = 0, nexti=1; i < str.length(); i++, nexti++) {
         char c = str[i];
         char n = str[nexti];
 	    if (c == '%'){
@@ -69,7 +66,6 @@ void format(const string str, const T val, const argT... args){
                   exit(EXIT_FAILURE);
             }
 	    } else  cout << c;
-        nexti++;
     }
 }
 
@@ -83,3 +79,7 @@ void formatln(const string str){
     format(str);
     cout << '\n';
 }
+ 
+ 
+
+ 
