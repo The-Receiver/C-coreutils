@@ -18,7 +18,7 @@ void verify_string(const string str){
         } else if (c == '%'){
             i++;
             nexti++;
-        }   nexti++;
+        }   
     }
 }
  
@@ -39,7 +39,6 @@ void format(const string str){
  
 template<typename T, typename... argT>
 void format(const string str, const T val, const argT... args){
-    int nexti = 1;
     for (int i = 0, nexti=1; i < str.length(); i++, nexti++) {
         char c = str[i];
         char n = str[nexti];
